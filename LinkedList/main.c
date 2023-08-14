@@ -5,7 +5,6 @@ struct LinkedList
 {
     int numero;
     struct LinkedList *proximo;
-    int tamanho;
 };
 
 typedef struct LinkedList list;
@@ -20,6 +19,17 @@ void add(int x) {
     primeiroNodo = lista;
 }
 
+void exibeNaTelaLista() {
+
+    list *aux = primeiroNodo;
+    while (aux != NULL) {
+        printf("-> %d ", aux->numero);
+        aux = aux -> proximo;
+    }
+  
+    
+}
+
 
 int main(){
 
@@ -29,5 +39,6 @@ int main(){
     add(4);
     add(5);
 
-
+    exibeNaTelaLista();
+    
 }
