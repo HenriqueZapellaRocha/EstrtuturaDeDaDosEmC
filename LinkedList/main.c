@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // estrutura para LinkedList
 struct LinkedList
@@ -30,6 +31,28 @@ void add(int x) {
     
 }
 
+// funcao que remove um nodo da linkedlist por o valor contido no espaco de dados
+void removeByNumber(int numero) {
+
+    list *aux = primeiroNodo;
+    list *anterior = NULL;
+    
+    while(aux != NULL) {
+        // testa se o nodo atual tem o mesmo valor a ser buscado
+        if(aux -> numero == numero) {
+            // retira os ponteiros do nodo a ser removido 
+            anterior->proximo = aux->proximo;
+            // "mata" o nodo a ser removido da memoria
+            aux = NULL;
+        } else{
+            // caso o valor do nodo nao seja igual, anda para frente e armazena o anterior
+            anterior = aux;
+            aux = aux->proximo;
+        }
+    }
+
+}
+
 // funcao que escreve no terminal os elementos da lista encadeada
 void exibeNaTelaLista() {
 
@@ -47,7 +70,9 @@ int main(){
     add(3);
     add(4);
     add(5);
-
+    exibeNaTelaLista();
+    printf("\n");
+    removeByNumber(2);
     exibeNaTelaLista();
     
 }
