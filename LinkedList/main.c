@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// estrutura para LinkedList
 struct LinkedList
 {
     int numero;
@@ -9,16 +10,27 @@ struct LinkedList
 
 typedef struct LinkedList list;
 
+// referencia para o primeiro nodo
 list *primeiroNodo;
+list *UltimoNodo;
 
+
+// funcao que adiciona novos nodoas a linkedlist
 void add(int x) {
     
     list *lista = (list*) malloc(sizeof(list));
     lista -> numero = x;
-    lista -> proximo = primeiroNodo;
-    primeiroNodo = lista;
+    if(primeiroNodo == NULL) {
+        primeiroNodo = lista;
+        UltimoNodo = lista;
+    } else {
+        UltimoNodo->proximo = lista;
+        UltimoNodo = lista;
+    }
+    
 }
 
+// funcao que escreve no terminal os elementos da lista encadeada
 void exibeNaTelaLista() {
 
     list *aux = primeiroNodo;
@@ -26,10 +38,7 @@ void exibeNaTelaLista() {
         printf("-> %d ", aux->numero);
         aux = aux -> proximo;
     }
-  
-    
 }
-
 
 int main(){
 
