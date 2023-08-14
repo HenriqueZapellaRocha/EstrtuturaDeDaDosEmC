@@ -45,7 +45,8 @@ void removeByNumber(int numero) {
             // primeiro nodo se torna o proximo nodo 
             primeiroNodo = aux->proximo;
             // "mata" o nodo a ser removido da memoria
-            aux = NULL;
+            free(aux);
+            aux = primeiroNodo ->proximo;
             // caso o nodo a ser removido seja o ultimo
             } else if (aux == UltimoNodo) {
             // retira os ponteiros do nodo a ser removido 
@@ -53,12 +54,13 @@ void removeByNumber(int numero) {
             // ultimo nodo se torna o anterior ao que foi retirado
             UltimoNodo = anterior;
             // "mata" o nodo a ser removido da memoria
-            aux = NULL;
+            free(aux);
             } else {
             // retira os ponteiros do nodo a ser removido 
             anterior->proximo = aux->proximo;
             // "mata" o nodo a ser removido da memoria
-            aux = NULL;
+            free(aux);
+            aux = anterior -> proximo;
             }
         } else{
             // caso o valor do nodo nao seja igual, anda para frente e armazena o anterior
@@ -66,7 +68,6 @@ void removeByNumber(int numero) {
             aux = aux->proximo;
         }
     }
-
 }
 
 // funcao que escreve no terminal os elementos da lista encadeada
@@ -84,11 +85,11 @@ int main(){
     add(1);
     add(2);
     add(3);
-    add(4);
+    add(1);
     add(5);
     exibeNaTelaLista();
     printf("\n");
-    removeByNumber(5);
+    removeByNumber(1);
     exibeNaTelaLista();
     
 }
