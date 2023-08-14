@@ -40,10 +40,26 @@ void removeByNumber(int numero) {
     while(aux != NULL) {
         // testa se o nodo atual tem o mesmo valor a ser buscado
         if(aux -> numero == numero) {
+            // caso o primeiro nodo seja o a ser retirado
+            if(aux == primeiroNodo) {
+            // primeiro nodo se torna o proximo nodo 
+            primeiroNodo = aux->proximo;
+            // "mata" o nodo a ser removido da memoria
+            aux = NULL;
+            // caso o nodo a ser removido seja o ultimo
+            } else if (aux == UltimoNodo) {
+            // retira os ponteiros do nodo a ser removido 
+            anterior->proximo = aux->proximo;
+            // ultimo nodo se torna o anterior ao que foi retirado
+            UltimoNodo = anterior;
+            // "mata" o nodo a ser removido da memoria
+            aux = NULL;
+            } else {
             // retira os ponteiros do nodo a ser removido 
             anterior->proximo = aux->proximo;
             // "mata" o nodo a ser removido da memoria
             aux = NULL;
+            }
         } else{
             // caso o valor do nodo nao seja igual, anda para frente e armazena o anterior
             anterior = aux;
@@ -72,7 +88,7 @@ int main(){
     add(5);
     exibeNaTelaLista();
     printf("\n");
-    removeByNumber(2);
+    removeByNumber(5);
     exibeNaTelaLista();
     
 }
