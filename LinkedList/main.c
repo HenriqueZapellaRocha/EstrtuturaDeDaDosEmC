@@ -96,17 +96,16 @@ void exibeNaTelaLista() {
 
 int main(){
 
-    add(1);
-    add(2);
-    add(3);
-    add(1);
-    add(5);
-    exibeNaTelaLista();
-    printf("\n");
-    removeByNumber(1);
-    add(200);
-    add(300);
-    exibeNaTelaLista();
+ add(1);
+ add(2);
+ add(3);
+ add(4);
+ removeAsQueue();
+ removeAsQueue();
+ removeAsQueue();
+ add(2);
+ removeByNumber(2);
+ exibeNaTelaLista();
     
     printf("\n%d", nElementos);
     
