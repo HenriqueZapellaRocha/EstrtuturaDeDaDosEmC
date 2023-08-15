@@ -84,6 +84,31 @@ void removeAsQueue() {
     nElementos--;
 }
 
+void removeByIndex(int index) {
+
+    list *aux = primeiroNodo;
+    list *anterior = NULL;
+
+    for(int i =1; i <= nElementos; i++) {
+        if(i == index) {
+     
+            if(i == 1) {
+                 primeiroNodo = aux->proximo;
+            } else if(i == nElementos) {
+                UltimoNodo = aux;
+            } else {
+            anterior->proximo = aux->proximo;
+            aux = anterior;
+            }
+            nElementos--;
+            break;
+        } else {
+            anterior = aux;
+            aux = aux->proximo;
+        }
+    }
+}
+
 // funcao que escreve no terminal os elementos da lista encadeada
 void exibeNaTelaLista() {
 
@@ -100,12 +125,12 @@ int main(){
  add(2);
  add(3);
  add(4);
- removeAsQueue();
- removeAsQueue();
- removeAsQueue();
- add(2);
- removeByNumber(2);
- exibeNaTelaLista();
+add(5);
+exibeNaTelaLista();
+printf("\n");
+removeByIndex(1);
+exibeNaTelaLista();
+
     
     printf("\n%d", nElementos);
     
