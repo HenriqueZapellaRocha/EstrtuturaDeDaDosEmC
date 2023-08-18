@@ -62,23 +62,57 @@ bool add(int value, Tree *node) {
 
 
 
-bool search(int value, Tree *node) {
+bool searchByValue(int value, Tree *node) {
 
     // verify if the actual node is identical value than we are comparing
     if (node != NULL && node->value == value) {
         return true;
     }
-
     // if the value we are searching is smaller than the node we have, so we make a recursive call passing the left children
     if (value < node->value && node->leftNode != NULL) {
-        return search(value, node->leftNode);
+        return searchByValue(value, node->leftNode);
     // if the value we are searching is bigger than the node we have, so we make a recursive call passing the right children
     } else if (value > node->value && node->rightNode != NULL) {
-        return search(value, node->rightNode);
+        return searchByValue(value, node->rightNode);
     }
 
 
 return false;
+
+ }
+
+Tree searchByValueReturningNode(int value, Tree *node) {
+
+    // verify if the actual node is identical value than we are comparing
+    if (node != NULL && node->value == value) {
+        return *node;
+    }
+    // if the value we are searching is smaller than the node we have, so we make a recursive call passing the left children
+    if (value < node->value && node->leftNode != NULL) {
+        return searchByValueReturningNode(value, node->leftNode);
+    // if the value we are searching is bigger than the node we have, so we make a recursive call passing the right children
+    } else if (value > node->value && node->rightNode != NULL) {
+        return searchByValueReturningNode(value, node->rightNode);
+    }
+
+ }
+
+ bool removeNode(int value, Tree *node) {
+
+
+
+    if((node->value != NULL) && (node->value == value) && (node->leftNode == NULL) && (node->rightNode == NULL)) {
+        node = NULL;
+        nElemntos--;
+        return true;
+    } 
+     // if the value we are searching is smaller than the node we have, so we make a recursive call passing the left children
+    if (value < node->value && node->leftNode != NULL) {
+        return remmoveNode(value, node->leftNode);
+    // if the value we are searching is bigger than the node we have, so we make a recursive call passing the right children
+    } else if (value > node->value && node->rightNode != NULL) {
+        return removeNode(value, node->rightNode);
+    }
 
 
  }      
@@ -94,10 +128,11 @@ int main(void) {
    add(13, root);
    add(14, root);
    add(10, root);
+   add(20,root);
   
-   printf("%d   %d   %d  //  %d   %d    %d\n", root->value, root->leftNode->value, root->leftNode->leftNode->value, root->rightNode->value, root->rightNode->rightNode->value, root->rightNode->leftNode->value);
-
-    printf("%d", search(4,root));
+    printf("%d   %d   %d  //  %d   %d    %d\n", root->value, root->leftNode->value, root->leftNode->leftNode->value, root->rightNode->value, root->rightNode->rightNode->value, root->rightNode->leftNode->value);
+    removeNode(3, root);
+     printf("%d   %d   %d  //  %d   %d    %d\n", root->value, root->leftNode->value, root->leftNode->leftNode->value, root->rightNode->value, root->rightNode->rightNode->value, root->rightNode->leftNode->value);
     
     return 0;
 }
