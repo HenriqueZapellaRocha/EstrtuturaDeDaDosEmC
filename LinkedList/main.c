@@ -121,15 +121,15 @@ void exibeNaTelaLista() {
 
 int main(){
 
- add(1);
- add(2);
- add(3);
- add(4);
-add(5);
-exibeNaTelaLista();
-printf("\n");
-removeByIndex(1);
-exibeNaTelaLista();
+    add(1);
+    add(2);
+    add(3);
+    add(4);
+    add(5);
+    exibeNaTelaLista();
+    printf("\n");
+    removeByIndex(1);
+    exibeNaTelaLista();
 
     
     printf("\n%d", nElementos);
