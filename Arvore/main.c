@@ -81,45 +81,44 @@ return false;
 
  }
 
-Tree searchByValueReturningNode(int value, Tree *node) {
+Tree * searchByValueReturningNode(int value, Tree *node, Tree *reference) {
 
     // verify if the actual node is identical value than we are comparing
-    if (node != NULL && node->value == value) {
-        return *node;
+    if (node != NULL && (node->leftNode->value == value || node->rightNode->value == value))  {
+        reference = node;
+        return reference;
     }
     // if the value we are searching is smaller than the node we have, so we make a recursive call passing the left children
     if (value < node->value && node->leftNode != NULL) {
-        return searchByValueReturningNode(value, node->leftNode);
+        return searchByValueReturningNode(value, node->leftNode, reference);
     // if the value we are searching is bigger than the node we have, so we make a recursive call passing the right children
     } else if (value > node->value && node->rightNode != NULL) {
-        return searchByValueReturningNode(value, node->rightNode);
+        return searchByValueReturningNode(value, node->rightNode, reference);
     }
+
+return reference;
 
  }
 
  bool removeNode(int value, Tree *node) {
 
 
+    Tree *search = searchByValueReturningNode(value, node, NULL);
 
-    if((node->value != NULL) && (node->value == value) && (node->leftNode == NULL) && (node->rightNode == NULL)) {
-        node = NULL;
+
+    if(search->leftNode->value == value ) {
+        search->leftNode = NULL;
         nElemntos--;
         return true;
     } 
-     // if the value we are searching is smaller than the node we have, so we make a recursive call passing the left children
-    if (value < node->value && node->leftNode != NULL) {
-        return remmoveNode(value, node->leftNode);
-    // if the value we are searching is bigger than the node we have, so we make a recursive call passing the right children
-    } else if (value > node->value && node->rightNode != NULL) {
-        return removeNode(value, node->rightNode);
-    }
-
+  
+    return false;
 
  }      
 
 
 
-int main(void) {
+int main() {
 
 
    add(9,root);
@@ -131,8 +130,10 @@ int main(void) {
    add(20,root);
   
     printf("%d   %d   %d  //  %d   %d    %d\n", root->value, root->leftNode->value, root->leftNode->leftNode->value, root->rightNode->value, root->rightNode->rightNode->value, root->rightNode->leftNode->value);
-    removeNode(3, root);
-     printf("%d   %d   %d  //  %d   %d    %d\n", root->value, root->leftNode->value, root->leftNode->leftNode->value, root->rightNode->value, root->rightNode->rightNode->value, root->rightNode->leftNode->value);
-    
+    removeNode(3,root);
+     printf("\n%d   %d  //  %d   %d    %d\n", root->value, root->leftNode->value, root->rightNode->value, root->rightNode->rightNode->value, root->rightNode->leftNode->value);
+    printf("%d", root->leftNode->leftNode->value);
+
+
     return 0;
 }
