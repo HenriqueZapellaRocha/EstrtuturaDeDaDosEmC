@@ -84,9 +84,11 @@ return false;
 Tree * searchByValueReturningNode(int value, Tree *node, Tree *reference) {
 
     // verify if the actual node is identical value than we are comparing
-    if (node != NULL && (node->leftNode->value == value || node->rightNode->value == value))  {
+    if (node != NULL && ((node->leftNode != NULL && node->leftNode->value == value) || node->rightNode != NULL && node->rightNode->value == value))  {
+       
         reference = node;
         return reference;
+        
     }
     // if the value we are searching is smaller than the node we have, so we make a recursive call passing the left children
     if (value < node->value && node->leftNode != NULL) {
@@ -96,7 +98,7 @@ Tree * searchByValueReturningNode(int value, Tree *node, Tree *reference) {
         return searchByValueReturningNode(value, node->rightNode, reference);
     }
 
-return reference;
+return NULL;
 
  }
 
@@ -105,15 +107,60 @@ return reference;
 
     Tree *search = searchByValueReturningNode(value, node, NULL);
 
-
-    if(search->leftNode->value == value ) {
+    //if the node to be removed is on the left of the parent and it doesn't have children
+    if((search->leftNode != NULL) && search->leftNode->value == value && search->leftNode->leftNode == NULL && search->leftNode->rightNode == NULL) {
+        free(search->leftNode);
         search->leftNode = NULL;
         nElemntos--;
         return true;
     } 
+     //if the node to be removed is on the left of the parent and it doesn't have children
+    if((search->rightNode != NULL) && search->rightNode->value == value && search->rightNode->leftNode == NULL && search->rightNode->rightNode == NULL) {
+        free(search->rightNode);
+        search->rightNode = NULL;
+        nElemntos--;
+        return true;
+    } 
+    // if the node to be removed is on the right and it has any child
+    if((search->leftNode != NULL) && search->leftNode->value == value && (search->leftNode->leftNode != NULL || search->leftNode->rightNode != NULL)) { 
+        //if the node to be removed has only one child, and it is located on the left
+        if(search->leftNode->leftNode != NULL && search->leftNode->rightNode == NULL) {
+            search->leftNode = search->leftNode->leftNode;
+            free(search->leftNode->leftNode);
+            search->leftNode->leftNode = NULL;
+            nElemntos--;
+            return true;
+         //if the node to be removed has only one child, and it is located on the right
+        } else if(search->leftNode->leftNode == NULL && search->leftNode->rightNode != NULL) {
+            search->leftNode = search->leftNode->rightNode;
+            free(search->leftNode->rightNode);
+            search->leftNode->rightNode = NULL;
+            nElemntos--;
+            return true;
+
+        }
+    }
+    // if the node to be removed is on the right and it has any child
+    if((search->rightNode != NULL) && search->rightNode->value == value && (search->rightNode->leftNode != NULL || search->rightNode->rightNode != NULL)) { 
+        //if the node to be removed has only one child, and it is located on the left
+        if(search->rightNode->leftNode != NULL && search->rightNode->rightNode == NULL) {
+            search->rightNode = search->rightNode->leftNode;
+            free(search->rightNode->leftNode);
+            search->rightNode->leftNode = NULL;
+            nElemntos--;
+            return true;
+        //if the node to be removed has only one child, and it is located on the right
+        } else if(search->rightNode->leftNode == NULL && search->rightNode->rightNode != NULL) {
+            search->rightNode = search->rightNode->rightNode;
+            free(search->rightNode->rightNode);
+            search->rightNode->rightNode = NULL;
+            nElemntos--;
+            return true;
+        }
+    }
+  
   
     return false;
-
  }      
 
 
@@ -121,19 +168,13 @@ return reference;
 int main() {
 
 
-   add(9,root);
-   add(4, root);
-   add(3, root);
-   add(13, root);
-   add(14, root);
-   add(10, root);
-   add(20,root);
+    add(9, root);
+    add(10,root);
+    add(11, root);
   
-    printf("%d   %d   %d  //  %d   %d    %d\n", root->value, root->leftNode->value, root->leftNode->leftNode->value, root->rightNode->value, root->rightNode->rightNode->value, root->rightNode->leftNode->value);
-    removeNode(3,root);
-     printf("\n%d   %d  //  %d   %d    %d\n", root->value, root->leftNode->value, root->rightNode->value, root->rightNode->rightNode->value, root->rightNode->leftNode->value);
-    printf("%d", root->leftNode->leftNode->value);
-
+  
+    removeNode(10, root);
+  
 
     return 0;
 }
