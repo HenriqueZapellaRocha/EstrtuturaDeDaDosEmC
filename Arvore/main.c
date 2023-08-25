@@ -102,8 +102,23 @@ return NULL;
 
  }
 
+// This function demonstrates a case of node removal, where it returns the rightmost node from the left subtree as compared to the receiving node
+ Tree * fatherFromTheMoreBiggerNodeFromLeftSubTree(Tree *node, Tree *reference) {
+
+    if(node->rightNode->rightNode == NULL ) {
+        reference = node;
+        return reference;
+    }
+    else {
+        return fatherFromTheMoreBiggerNodeFromLeftSubTree(node->rightNode , reference);
+    }
+
+ }
+
  bool removeNode(int value, Tree *node) {
 
+
+// substituir pelo maior no da arvore da esquerda 
 
     Tree *search = searchByValueReturningNode(value, node, NULL);
 
@@ -130,8 +145,16 @@ return NULL;
             search->leftNode->leftNode = NULL;
             nElemntos--;
             return true;
+        }
+         // if the node have two childrens
+        if(search->leftNode->leftNode != NULL && search->leftNode->rightNode != NULL) {
+            Tree *theMost = fatherFromTheMoreBiggerNodeFromLeftSubTree(search->rightNode->leftNode, NULL);
+            search->leftNode->value = theMost->rightNode->value;
+            free(theMost->rightNode);
+            theMost->rightNode = NULL;
+        }
          //if the node to be removed has only one child, and it is located on the right
-        } else if(search->leftNode->leftNode == NULL && search->leftNode->rightNode != NULL) {
+        if(search->leftNode->leftNode == NULL && search->leftNode->rightNode != NULL) {
             search->leftNode = search->leftNode->rightNode;
             free(search->leftNode->rightNode);
             search->leftNode->rightNode = NULL;
@@ -149,8 +172,16 @@ return NULL;
             search->rightNode->leftNode = NULL;
             nElemntos--;
             return true;
+        }
+        // if the node have two childrens
+        if(search->rightNode->leftNode != NULL && search->rightNode->rightNode != NULL) {
+            Tree *theMost = fatherFromTheMoreBiggerNodeFromLeftSubTree(search->rightNode->leftNode, NULL);
+            search->rightNode->value = theMost->rightNode->value;
+            free(theMost->rightNode);
+            theMost->rightNode = NULL;
+        }
         //if the node to be removed has only one child, and it is located on the right
-        } else if(search->rightNode->leftNode == NULL && search->rightNode->rightNode != NULL) {
+        if(search->rightNode->leftNode == NULL && search->rightNode->rightNode != NULL) {
             search->rightNode = search->rightNode->rightNode;
             free(search->rightNode->rightNode);
             search->rightNode->rightNode = NULL;
@@ -168,12 +199,14 @@ return NULL;
 int main() {
 
 
-    add(9, root);
-    add(10,root);
-    add(11, root);
-  
-  
-    removeNode(10, root);
+    add(12, root);
+    add(17, root);
+    add(13, root);
+    add(14, root);
+    add(24,root);
+    add(15,root);
+    removeNode(17,root);
+
   
 
     return 0;
