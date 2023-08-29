@@ -105,7 +105,7 @@ return NULL;
 // This function demonstrates a case of node removal, where it returns the rightmost node from the left subtree as compared to the receiving node
  Tree * fatherFromTheMoreBiggerNodeFromLeftSubTree(Tree *node, Tree *reference) {
 
-    if(node->rightNode->rightNode == NULL ) {
+    if((node != NULL)&& node->rightNode->rightNode == NULL ) {
         reference = node;
         return reference;
     }
@@ -195,17 +195,43 @@ return NULL;
  }      
 
 
+void posFixedSearch(Tree *node) {
+
+    if(node != NULL) {
+        printf("%d\n", node->value);
+    }
+    if(node->leftNode != NULL && node->rightNode != NULL) {
+        posFixedSearch(node->leftNode);
+        posFixedSearch(node->rightNode);
+    }
+    if(node->leftNode != NULL && node->rightNode == NULL) {
+         posFixedSearch(node->leftNode);
+    }
+    if(node->rightNode != NULL && node->leftNode == NULL) {
+         posFixedSearch(node->rightNode);
+    }
+   
+}
+
 
 int main() {
 
 
     add(12, root);
-    add(17, root);
-    add(13, root);
-    add(14, root);
-    add(24,root);
-    add(15,root);
-    removeNode(17,root);
+    add(9, root);
+    add(8, root);
+    add(6,root);
+    add(5,root);
+    add(10,root);
+    add(40,root);
+    add(50,root);
+    posFixedSearch(root);
+
+    printf("\n\n");
+
+    removeNode(9,root);
+
+    posFixedSearch(root);
 
   
 
